@@ -1,0 +1,38 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-size: 18px;
+}
+
+.list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list-container {
+  margin-top: 50px;
+}
+
+.todo-title {
+  text-align: center;
+  margin-bottom: 50px;
+}
+.completed {
+  text-decoration: line-through;
+}
+.todo {
+  max-width: 50%;
+  margin: 0 auto;
+}
+
+.list-title {
+  font-weight: normal;
+}
+
+.list-button {
+margin: 0 5px;
+}
