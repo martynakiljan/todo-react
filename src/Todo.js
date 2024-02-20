@@ -1,5 +1,5 @@
 /** @format */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FormControl } from "@mui/base/FormControl";
 import TodoList from "./TodoList";
 import FormLabel from "@mui/joy/FormLabel";
@@ -11,6 +11,7 @@ const Todo = () => {
   const [text, setText] = useState("");
   const [tasks, setTasks] = useState([]);
   const [editText, setEditText] = useState(false);
+  const [disable, setDisable] = useState(false);
 
   const editTask = (e) => {
     const taskText = e.currentTarget.parentElement.parentElement.firstChild;
@@ -19,7 +20,6 @@ const Todo = () => {
     if (editText) {
       setEditText(false);
       taskText.setAttribute("contentEditable", false);
-
     } else {
       setEditText(true);
       taskText.setAttribute("contentEditable", true);
@@ -28,7 +28,9 @@ const Todo = () => {
   };
 
   const completeTask = (e) => {
-    const listItem = Number(e.currentTarget.parentElement.parentElement.id);
+    const listItem = Number(
+      e.currentTarget.parentElement.parentElement.parentElement.id
+    );
 
     setTasks(
       tasks.map((task) => {
@@ -41,21 +43,31 @@ const Todo = () => {
     );
   };
   const addTask = () => {
-    const newTask = {
-      id: Date.now(),
-      text,
-      completed: false,
-      editText: false,
-    };
+    if (text.length > 1) {
+      const newTask = {
+        id: Date.now(),
+        text,
+        completed: false,
+        editText: false,
+      };
 
-    setTasks([...tasks, newTask]);
-    setText("");
+      setTasks([...tasks, newTask]);
+      setText("");
+    }
   };
 
   const deleteTask = (e) => {
     const listItem = Number(e.currentTarget.parentElement.parentElement.id);
     setTasks(tasks.filter((item) => item.id !== listItem));
   };
+
+  useEffect(() => {
+    if (text.trim().length === 0) {
+      setDisable(true);
+    } else {
+      setDisable(false);
+    }
+  }, [text]);
 
   return (
     <Grid container direction="row" justifyContent="center" alignItems="center">
@@ -71,7 +83,7 @@ const Todo = () => {
           sx={{ m: 0.2 }}
           variant="contained"
           color="primary"
-          disabled={!text}
+          disabled={disable}
           onClick={addTask}
         >
           ADD
