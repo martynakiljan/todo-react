@@ -25,11 +25,12 @@ body {
   text-align: center;
   margin: 50px 0;
   color: black;
-  font-size: 35px;
+  font-size: 40px;
 }
 
 .important {
   color: #d32f2f;
+  font-weight: bold;
 }
 
 .completed {
@@ -42,8 +43,8 @@ body {
 }
 
 .list-title {
-  font-weight: normal;
-  min-width: 200px;
+  min-width: 150px;
+    font-family: "Architects Daughter", cursive;
 }
 
 .list-button {

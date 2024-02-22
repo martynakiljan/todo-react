@@ -13,7 +13,6 @@ const Todo = () => {
   const [tasks, setTasks] = useState([]);
   const [disable, setDisable] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
-  const [isImportant, setIsImportant] = useState(false);
 
   const editTask = (e) => {
     const checkIfCompleted = e.currentTarget.parentElement.parentElement;
@@ -38,8 +37,7 @@ const Todo = () => {
       }
       return task;
     });
-    console.log(importantTask);
-    setIsImportant(true);
+
     setTasks(importantTask);
   };
 
@@ -78,7 +76,6 @@ const Todo = () => {
       setTasks([...tasks, newTask]);
       setText("");
       setIsEdited(false);
-      setIsImportant(false);
     }
   };
 
@@ -146,7 +143,6 @@ const Todo = () => {
                 completeTask={completeTask}
                 editTask={editTask}
                 markAsImportant={markAsImportant}
-                isImportant={isImportant}
               />
               <Info tasks={tasks} />
             </>
