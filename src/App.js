@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="App">
       <Container maxWidth="sm">
-        <h1 className="todo-title">TO DO LIST</h1>
+        <h1 className="todo-title">TODO LIST</h1>
         <Todo />
       </Container>
     </div>
