@@ -7,12 +7,19 @@ import Button from "@mui/material/Button";
 import { OutlinedInput, Alert, Typography, Card } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Info from "./Info";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const Todo = () => {
   const [text, setText] = useState("");
   const [tasks, setTasks] = useState([]);
   const [disable, setDisable] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const spinner: CSSProperties = {
+    display: "block",
+    margin: "20px auto",
+  };
 
   const editTask = (e) => {
     const checkIfCompleted = e.currentTarget.parentElement.parentElement;
@@ -73,7 +80,12 @@ const Todo = () => {
         important: false,
       };
 
-      setTasks([...tasks, newTask]);
+      setLoading(true);
+      setTimeout(() => {
+        setTasks([...tasks, newTask]);
+        setLoading(false);
+      }, 200);
+
       setText("");
       setIsEdited(false);
     }
@@ -119,7 +131,7 @@ const Todo = () => {
             value={text}
             onChange={(e) => setText(e.target.value)}
             sx={{
-              minWidth: "250px",
+              minWidth: "60%",
               padding: "0px",
               marginRight: 2.5,
               marginBottom: 1,
@@ -135,7 +147,16 @@ const Todo = () => {
             {isEdited ? "Edit Task" : "Add Task"}
           </Button>
 
-          {tasks.length > 0 ? (
+          {loading ? (
+            <ClipLoader
+              color="#1976d2"
+              loading={loading}
+              size={20}
+              aria-label="Loading Spinner"
+              cssOverride={spinner}
+              data-testid="loader"
+            />
+          ) : tasks.length > 0 ? (
             <>
               <TodoList
                 tasks={tasks}
