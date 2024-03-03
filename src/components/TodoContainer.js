@@ -1,5 +1,5 @@
 /** @format */
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { FormControl } from "@mui/base/FormControl";
 import TodoList from "./TodoList";
 import FormLabel from "@mui/joy/FormLabel";
@@ -9,7 +9,7 @@ import Grid from "@mui/material/Grid";
 import Info from "./Info";
 import ClipLoader from "react-spinners/ClipLoader";
 
-const Todo = () => {
+const TodoContainer = () => {
   const [text, setText] = useState("");
   const [tasks, setTasks] = useState([]);
   const [disable, setDisable] = useState(false);
@@ -21,25 +21,16 @@ const Todo = () => {
     margin: "20px auto",
   };
 
-  const editTask = (e) => {
-    const checkIfCompleted = e.currentTarget.parentElement.parentElement;
-
-    if (!checkIfCompleted.classList.contains("completed")) {
-      //przenosze tekst z kliknietego taska do inputa//
-      const textToEdit =
-        e.currentTarget.parentElement.previousSibling.innerText;
-      setText(textToEdit);
-      setIsEdited(true);
-      //usuwam ten task z listy//
-      const taskID = e.currentTarget.parentElement.parentElement.id;
-      setTasks((current) => current.filter((task) => task.id != taskID));
-    }
+  const editTask = (completed, text, id) => {
+    if (!completed) return;
+    setText(text);
+    setIsEdited(true);
+    setTasks((current) => current.filter((task) => task.id != id));
   };
 
-  const markAsImportant = (e) => {
-    const taskID = e.currentTarget.parentElement.parentElement.id;
+  const markAsImportant = (id) => {
     const importantTask = tasks.map((task) => {
-      if (task.id == taskID) {
+      if (task.id == id) {
         task.important = !task.important;
       }
       return task;
@@ -48,27 +39,15 @@ const Todo = () => {
     setTasks(importantTask);
   };
 
-  const completeTask = (e) => {
-    const taskID = e.currentTarget.parentElement.parentElement.id;
-    const completeTask = tasks.map((task) => {
-      if (task.id == taskID) {
-        task.completed = !task.completed;
-      }
-      return task;
-    });
-
-    setTasks(completeTask);
-
-    // setTasks(
-    //   tasks.map((task) => {
-    //     console.log(task);
-    //     if (task.id === listItem) {
-    //       return { ...task, completed: true };
-    //     } else {
-    //       return task;
-    //     }
-    //   })
-    // );
+  const completeTask = (id) => {
+    setTasks((tasks) =>
+      tasks.map((task) => {
+        if (task.id == id) {
+          task.completed = !task.completed;
+        }
+        return task;
+      })
+    );
   };
 
   const addTask = () => {
@@ -91,13 +70,12 @@ const Todo = () => {
     }
   };
 
-  const deleteTask = (e) => {
-    const listItem = Number(e.currentTarget.parentElement.parentElement.id);
-    setTasks(tasks.filter((item) => item.id !== listItem));
+  const deleteTask = (id) => {
+    setTasks((tasks) => tasks.filter((item) => item.id !== id));
   };
 
   useEffect(() => {
-    if (text.trim().length === 0) {
+    if (text.trim().length < 1) {
       setDisable(true);
     } else {
       setDisable(false);
@@ -106,6 +84,7 @@ const Todo = () => {
 
   return (
     <Card sx={{ pt: 5, pb: 5, pr: 3, pl: 3 }}>
+      <pre>{JSON.stringify(tasks, null, 2)}</pre>
       <Grid
         container
         direction="row"
@@ -178,4 +157,4 @@ const Todo = () => {
   );
 };
 
-export default Todo;
+export default TodoContainer;

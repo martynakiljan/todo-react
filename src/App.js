@@ -1,7 +1,7 @@
 /** @format */
 
 import "./App.css";
-import Todo from "./Todo";
+import TodoContainer from "./components/TodoContainer";
 import Container from "@mui/material/Container";
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
     <div className="App">
       <Container maxWidth="sm">
         <h1 className="todo-title">TODO LIST</h1>
-        <Todo />
+        <TodoContainer />
       </Container>
     </div>
   );
