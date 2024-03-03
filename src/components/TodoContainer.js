@@ -8,29 +8,31 @@ import { OutlinedInput, Alert, Typography, Card } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Info from "./Info";
 import ClipLoader from "react-spinners/ClipLoader";
+import ConfirmationModal from "./ConfirmationModal";
 
-const TodoContainer = () => {
+const TodoContainer = ({ tasks, setTasks }) => {
   const [text, setText] = useState("");
-  const [tasks, setTasks] = useState([]);
   const [disable, setDisable] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [confirmation, setConfirmation] = useState(false);
+  const [idDeletedTask, setIdDeletedTask] = useState(0);
 
-  const spinner: CSSProperties = {
+  const spinner = {
     display: "block",
     margin: "20px auto",
   };
 
   const editTask = (completed, text, id) => {
-    if (!completed) return;
+    if (completed) return;
     setText(text);
     setIsEdited(true);
-    setTasks((current) => current.filter((task) => task.id != id));
+    setTasks((current) => current.filter((task) => task.id !== id));
   };
 
   const markAsImportant = (id) => {
     const importantTask = tasks.map((task) => {
-      if (task.id == id) {
+      if (task.id === id) {
         task.important = !task.important;
       }
       return task;
@@ -42,7 +44,7 @@ const TodoContainer = () => {
   const completeTask = (id) => {
     setTasks((tasks) =>
       tasks.map((task) => {
-        if (task.id == id) {
+        if (task.id === id) {
           task.completed = !task.completed;
         }
         return task;
@@ -70,8 +72,22 @@ const TodoContainer = () => {
     }
   };
 
-  const deleteTask = (id) => {
-    setTasks((tasks) => tasks.filter((item) => item.id !== id));
+  const closeModalandDelete = () => {
+    deleteTask();
+  };
+
+  const closeModalandDoNothing = () => {
+    setConfirmation(false);
+  };
+
+  const showDeleteModal = (id) => {
+    setConfirmation(true);
+    setIdDeletedTask(id);
+  };
+
+  const deleteTask = () => {
+    setConfirmation(false);
+    setTasks((tasks) => tasks.filter((item) => item.id !== idDeletedTask));
   };
 
   useEffect(() => {
@@ -84,7 +100,7 @@ const TodoContainer = () => {
 
   return (
     <Card sx={{ pt: 5, pb: 5, pr: 3, pl: 3 }}>
-      <pre>{JSON.stringify(tasks, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(tasks, null, 2)}</pre> */}
       <Grid
         container
         direction="row"
@@ -142,9 +158,16 @@ const TodoContainer = () => {
                 deleteTask={deleteTask}
                 completeTask={completeTask}
                 editTask={editTask}
+                showDeleteModal={showDeleteModal}
                 markAsImportant={markAsImportant}
               />
               <Info tasks={tasks} />
+              {confirmation ? (
+                <ConfirmationModal
+                  closeModalandDoNothing={closeModalandDoNothing}
+                  closeModalandDelete={closeModalandDelete}
+                />
+              ) : null}
             </>
           ) : (
             <Alert severity="error" sx={{ m: 5 }}>

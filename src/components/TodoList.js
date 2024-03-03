@@ -4,25 +4,25 @@ import Todo from "./Todo";
 
 const TodoList = ({
   tasks,
-  deleteTask,
   completeTask,
   editTask,
   markAsImportant,
+  showDeleteModal,
 }) => {
   return (
-            <>
-              <ul className="list-container">
-                {tasks.map((task) => (
-                  <Todo
-                    task={task}
-                    completeTask={completeTask}
-                    editTask={editTask}
-                    deleteTask={deleteTask}
-                    markAsImportant={markAsImportant}
-                  />
-                ))}
-              </ul>
-            </>
+    <>
+      <ul className="list-container">
+        {tasks.map((task) => (
+          <Todo
+            task={task}
+            completeTask={completeTask}
+            editTask={editTask}
+            markAsImportant={markAsImportant}
+            showDeleteModal={showDeleteModal}
+          />
+        ))}
+      </ul>
+    </>
   );
 };
 

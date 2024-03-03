@@ -7,39 +7,35 @@ import Checkbox from "@mui/material/Checkbox";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import Tooltip from "@mui/material/Tooltip";
 
-const Todo = (task, completeTask, editTask, deleteTask, markAsImportant) => {
-  // console.log(task);
-
-  //task.task bo dostaje object task i w srodku
-  //jest jeszczce jeden task, wiec podmienilam wszedzie
+const Todo = ({
+  task,
+  completeTask,
+  editTask,
+  markAsImportant,
+  showDeleteModal,
+}) => {
   return (
     <>
       <li
-        key={task.task.id}
-        id={task.task.id}
-        completed={task.task.completed}
-        className={task.task.completed ? "list-item completed" : "list-item"}
+        key={task.id}
+        id={task.id}
+        completed={task.completed}
+        className={task.completed ? "list-item completed" : "list-item"}
       >
         <Checkbox
-          onChange={completeTask}
+          onChange={() => completeTask(task.id)}
           color="success"
           inputProps={{ "aria-label": "controlled" }}
         />
-        <h3
-          className={
-            task.task.important ? "list-title important" : "list-title"
-          }
-        >
+        <h3 className={task.important ? "list-title important" : "list-title"}>
           {" "}
-          {task.task.text}
+          {task.text}
         </h3>
         <div>
           <Button
-            sx={{ m: 0.2, p: 0.5 }}
+            sx={{ m: 0.6, p: 0.5 }}
             variant="outlined"
-            onClick={() =>
-              editTask(task.task.completed, task.task.text, task.task.id)
-            }
+            onClick={() => editTask(task.completed, task.text, task.id)}
             startIcon={<EditIcon />}
           >
             Edit
@@ -49,11 +45,11 @@ const Todo = (task, completeTask, editTask, deleteTask, markAsImportant) => {
             variant="outlined"
             color="error"
             startIcon={<DeleteIcon />}
-            onClick={deleteTask}
+            onClick={() => showDeleteModal(task.id)}
           >
             Delete
           </Button>
-          <Button onClick={markAsImportant}>
+          <Button onClick={() => markAsImportant(task.id)}>
             <Tooltip title="mark as important!">
               <PriorityHighIcon
                 sx={

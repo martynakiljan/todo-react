@@ -3,15 +3,13 @@ import * as React from "react";
 import Alert from "@mui/material/Alert";
 
 const Info = ({ tasks }) => {
-  let counterCompletedTasks = 0;
-  let counterAllTasks = 0;
-  let counterImportantTasks = 0;
-
-  for (let i = 0; i < tasks.length; i++) {
-    if (tasks[i].completed == true) counterCompletedTasks++;
-    if (tasks) counterAllTasks++;
-    if (tasks[i].important == true) counterImportantTasks++;
-  }
+    const counterCompletedTasks = tasks.filter(
+      (tasks) => tasks.completed
+    ).length;
+    const counterAllTasks = tasks.length;
+    const counterImportantTasks = tasks.filter(
+      (tasks) => tasks.important
+    ).length;
 
   return (
     <>
