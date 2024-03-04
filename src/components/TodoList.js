@@ -10,6 +10,7 @@ const TodoList = ({
   showDeleteModal,
   dragstart,
   dragenter,
+   lastAddedTaskId,
   drop,
 }) => {
   return (
@@ -26,6 +27,7 @@ const TodoList = ({
             dragstart={dragstart}
             drop={drop}
             key={task.id}
+            lastAddedTaskId={lastAddedTaskId}
           />
         ))}
       </ul>

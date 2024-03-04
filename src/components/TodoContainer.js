@@ -7,21 +7,15 @@ import Button from "@mui/material/Button";
 import { OutlinedInput, Alert, Typography, Card } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Info from "./Info";
-import ClipLoader from "react-spinners/ClipLoader";
 import ConfirmationModal from "./ConfirmationModal";
 
 const TodoContainer = ({ tasks, setTasks }) => {
   const [text, setText] = useState("");
   const [disable, setDisable] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [confirmation, setConfirmation] = useState(false);
   const [idDeletedTask, setIdDeletedTask] = useState(0);
-
-  const spinner = {
-    display: "block",
-    margin: "20px auto",
-  };
+  const [lastAddedTaskId, setLastAddedTaskId] = useState(null);
 
   const editTask = (completed, text, id) => {
     if (completed) return;
@@ -37,7 +31,6 @@ const TodoContainer = ({ tasks, setTasks }) => {
       }
       return task;
     });
-
     setTasks(importantTask);
   };
 
@@ -60,15 +53,10 @@ const TodoContainer = ({ tasks, setTasks }) => {
         completed: false,
         important: false,
       };
-
-      setLoading(true);
-      setTimeout(() => {
-        setTasks([...tasks, newTask]);
-        setLoading(false);
-      }, 200);
-
+      setTasks([...tasks, newTask]);
       setText("");
       setIsEdited(false);
+      setLastAddedTaskId(newTask.id);
     }
   };
 
@@ -102,29 +90,29 @@ const TodoContainer = ({ tasks, setTasks }) => {
   const dragOverItem = useRef();
 
   const dragstart = (e, id) => {
-    console.log("drag start");
     dragItem.current = id;
   };
+
   const dragenter = (e) => {
-    console.log("drag enter");
     dragOverItem.current = e.currentTarget.id;
   };
 
-const drop = () => {
-  console.log("drop");
-  const copyListItems = [...tasks];
-  const dragItemIndex = tasks.findIndex((task) => task.id === dragItem.current);
-  const dragItemContent = copyListItems[dragItemIndex];
+  const drop = () => {
+    const copyListItems = [...tasks];
+    const dragItemIndex = tasks.findIndex(
+      (task) => task.id === dragItem.current
+    );
 
-  // Sprawdź, czy udało się znaleźć index elementu
-  if (dragItemIndex !== -1) {
-    copyListItems.splice(dragOverItem.current, 0, dragItemContent);
-    setTasks(copyListItems);
-  }
+    if (dragItemIndex !== -1) {
+      const dragItemContent = copyListItems[dragItemIndex];
+      copyListItems.splice(dragItemIndex, 1);
+      copyListItems.splice(dragOverItem.current, 0, dragItemContent);
+      setTasks(copyListItems);
+    }
 
-  dragItem.current = null;
-  dragOverItem.current = null;
-};
+    dragItem.current = null;
+    dragOverItem.current = null;
+  };
 
   return (
     <Card sx={{ pt: 5, pb: 5, pr: 3, pl: 3 }}>
@@ -170,16 +158,7 @@ const drop = () => {
             {isEdited ? "Edit Task" : "Add Task"}
           </Button>
 
-          {loading ? (
-            <ClipLoader
-              color="#1976d2"
-              loading={loading}
-              size={20}
-              aria-label="Loading Spinner"
-              cssOverride={spinner}
-              data-testid="loader"
-            />
-          ) : tasks.length > 0 ? (
+          {tasks.length > 0 ? (
             <>
               <TodoList
                 tasks={tasks}
@@ -191,6 +170,7 @@ const drop = () => {
                 dragenter={dragenter}
                 dragstart={dragstart}
                 drop={drop}
+                lastAddedTaskId={lastAddedTaskId}
               />
               <Info tasks={tasks} />
               {confirmation ? (
