@@ -8,6 +8,9 @@ const TodoList = ({
   editTask,
   markAsImportant,
   showDeleteModal,
+  dragstart,
+  dragenter,
+  drop,
 }) => {
   return (
     <>
@@ -19,6 +22,10 @@ const TodoList = ({
             editTask={editTask}
             markAsImportant={markAsImportant}
             showDeleteModal={showDeleteModal}
+            dragenter={dragenter}
+            dragstart={dragstart}
+            drop={drop}
+            key={task.id}
           />
         ))}
       </ul>

@@ -1,5 +1,5 @@
 /** @format */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { FormControl } from "@mui/base/FormControl";
 import TodoList from "./TodoList";
 import FormLabel from "@mui/joy/FormLabel";
@@ -98,6 +98,34 @@ const TodoContainer = ({ tasks, setTasks }) => {
     }
   }, [text]);
 
+  const dragItem = useRef();
+  const dragOverItem = useRef();
+
+  const dragstart = (e, id) => {
+    console.log("drag start");
+    dragItem.current = id;
+  };
+  const dragenter = (e) => {
+    console.log("drag enter");
+    dragOverItem.current = e.currentTarget.id;
+  };
+
+const drop = () => {
+  console.log("drop");
+  const copyListItems = [...tasks];
+  const dragItemIndex = tasks.findIndex((task) => task.id === dragItem.current);
+  const dragItemContent = copyListItems[dragItemIndex];
+
+  // Sprawdź, czy udało się znaleźć index elementu
+  if (dragItemIndex !== -1) {
+    copyListItems.splice(dragOverItem.current, 0, dragItemContent);
+    setTasks(copyListItems);
+  }
+
+  dragItem.current = null;
+  dragOverItem.current = null;
+};
+
   return (
     <Card sx={{ pt: 5, pb: 5, pr: 3, pl: 3 }}>
       {/* <pre>{JSON.stringify(tasks, null, 2)}</pre> */}
@@ -160,6 +188,9 @@ const TodoContainer = ({ tasks, setTasks }) => {
                 editTask={editTask}
                 showDeleteModal={showDeleteModal}
                 markAsImportant={markAsImportant}
+                dragenter={dragenter}
+                dragstart={dragstart}
+                drop={drop}
               />
               <Info tasks={tasks} />
               {confirmation ? (
