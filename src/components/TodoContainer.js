@@ -9,7 +9,7 @@ import Grid from "@mui/material/Grid";
 import Info from "./Info";
 import ConfirmationModal from "./ConfirmationModal";
 
-const TodoContainer = ({ tasks, setTasks }) => {
+const TodoContainer = React.memo(({ tasks, setTasks }) => {
   const [text, setText] = useState("");
   const [disable, setDisable] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
@@ -17,35 +17,44 @@ const TodoContainer = ({ tasks, setTasks }) => {
   const [idDeletedTask, setIdDeletedTask] = useState(0);
   const [lastAddedTaskId, setLastAddedTaskId] = useState(null);
 
-  const editTask = (completed, text, id) => {
-    if (completed) return;
-    setText(text);
-    setIsEdited(true);
-    setTasks((current) => current.filter((task) => task.id !== id));
-  };
+  const editTask = React.useCallback(
+    (completed, text, id) => {
+      if (completed) return;
+      setText(text);
+      setIsEdited(true);
+      setTasks((current) => current.filter((task) => task.id !== id));
+    },
+    [setText, setIsEdited, setTasks]
+  );
 
-  const markAsImportant = (id) => {
-    const importantTask = tasks.map((task) => {
-      if (task.id === id) {
-        task.important = !task.important;
-      }
-      return task;
-    });
-    setTasks(importantTask);
-  };
-
-  const completeTask = (id) => {
-    setTasks((tasks) =>
-      tasks.map((task) => {
+  const markAsImportant = React.useCallback(
+    (id) => {
+      const importantTask = tasks.map((task) => {
         if (task.id === id) {
-          task.completed = !task.completed;
+          task.important = !task.important;
         }
         return task;
-      })
-    );
-  };
+      });
+      setTasks(importantTask);
+    },
+    [tasks, setTasks]
+  );
 
-  const addTask = () => {
+  const completeTask = React.useCallback(
+    (id) => {
+      setTasks((tasks) =>
+        tasks.map((task) => {
+          if (task.id === id) {
+            task.completed = !task.completed;
+          }
+          return task;
+        })
+      );
+    },
+    [setTasks]
+  );
+
+  const addTask = React.useCallback(() => {
     if (text.length > 1) {
       const newTask = {
         id: Date.now(),
@@ -58,25 +67,28 @@ const TodoContainer = ({ tasks, setTasks }) => {
       setIsEdited(false);
       setLastAddedTaskId(newTask.id);
     }
-  };
+  }, [tasks, setTasks, text]);
 
   const closeModalandDelete = () => {
     deleteTask();
   };
 
-  const closeModalandDoNothing = () => {
+  const closeModalandDoNothing = React.useCallback(() => {
     setConfirmation(false);
-  };
+  }, [setConfirmation]);
 
-  const showDeleteModal = (id) => {
-    setConfirmation(true);
-    setIdDeletedTask(id);
-  };
+  const showDeleteModal = React.useCallback(
+    (id) => {
+      setConfirmation(true);
+      setIdDeletedTask(id);
+    },
+    [setConfirmation, setIdDeletedTask]
+  );
 
-  const deleteTask = () => {
+  const deleteTask = React.useCallback(() => {
     setConfirmation(false);
     setTasks((tasks) => tasks.filter((item) => item.id !== idDeletedTask));
-  };
+  }, [setConfirmation, setTasks, idDeletedTask]);
 
   useEffect(() => {
     if (text.trim().length < 1) {
@@ -89,21 +101,27 @@ const TodoContainer = ({ tasks, setTasks }) => {
   const dragItem = useRef();
   const dragOverItem = useRef();
 
-  const dragstart = (e, id) => {
-    dragItem.current = id;
-  };
+  const dragstart = React.useCallback(
+    (id) => {
+      dragItem.current = id;
+    },
+    [dragItem]
+  );
 
-  const dragenter = (e) => {
-    dragOverItem.current = e.currentTarget.id;
-  };
+  const dragenter = React.useCallback(
+    (e) => {
+      dragOverItem.current = e.currentTarget.id;
+    },
+    [dragOverItem]
+  );
 
-  const drop = () => {
-    const copyListItems = [...tasks];
+  const drop = React.useCallback(() => {
     const dragItemIndex = tasks.findIndex(
       (task) => task.id === dragItem.current
     );
 
     if (dragItemIndex !== -1) {
+      const copyListItems = [...tasks];
       const dragItemContent = copyListItems[dragItemIndex];
       copyListItems.splice(dragItemIndex, 1);
       copyListItems.splice(dragOverItem.current, 0, dragItemContent);
@@ -112,7 +130,7 @@ const TodoContainer = ({ tasks, setTasks }) => {
 
     dragItem.current = null;
     dragOverItem.current = null;
-  };
+  }, [dragItem, setTasks, tasks]);
 
   return (
     <Card sx={{ pt: 5, pb: 5, pr: 3, pl: 3 }}>
@@ -123,7 +141,7 @@ const TodoContainer = ({ tasks, setTasks }) => {
         justifyContent="center"
         alignItems="center"
       >
-        <FormControl defaultValue="" centered component>
+        <FormControl defaultValue="">
           <FormLabel
             className="label"
             sx={{ color: "primary.main" }}
@@ -189,6 +207,6 @@ const TodoContainer = ({ tasks, setTasks }) => {
       </Grid>
     </Card>
   );
-};
+});
 
 export default TodoContainer;

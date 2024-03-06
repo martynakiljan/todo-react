@@ -25,7 +25,10 @@ const CompletedTaskContainer = ({ tasks }) => {
                 console.log(completedTasks);
                 return (
                   <div className="completeTask">
-                    <li class="list-title list-title__completed">
+                    <li
+                      className="list-title list-title__completed"
+                      key={completeTask.id}
+                    >
                       {completeTask.text}
                     </li>
                     <button className="completeTask__btn">
