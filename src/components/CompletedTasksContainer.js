@@ -22,7 +22,6 @@ const CompletedTaskContainer = ({ tasks }) => {
           {completedTasks.length !== 0 ? (
             <ul className="list-container">
               {completedTasks.map((completeTask) => {
-                console.log(completedTasks);
                 return (
                   <div className="completeTask">
                     <li

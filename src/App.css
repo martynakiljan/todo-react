@@ -98,3 +98,7 @@ body {
   padding: 0 10px;
   color: green;
 }
+
+.css-1e6y48t-MuiButtonBase-root-MuiButton-root {
+  min-width: 50px!important;
+}

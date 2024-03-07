@@ -2,12 +2,17 @@
 import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
 import Checkbox from "@mui/material/Checkbox";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import Tooltip from "@mui/material/Tooltip";
 import ClipLoader from "react-spinners/ClipLoader";
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowUp,
+  faArrowDown,
+  faPenToSquare,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Todo = React.memo(
   ({
@@ -20,6 +25,9 @@ const Todo = React.memo(
     dragenter,
     lastAddedTaskId,
     drop,
+    moveUp,
+    moveDown,
+    index,
   }) => {
     const spinner = {
       display: "block",
@@ -44,7 +52,6 @@ const Todo = React.memo(
     }, []);
 
     console.log(task);
-
     return (
       <>
         {loading ? (
@@ -80,22 +87,17 @@ const Todo = React.memo(
             </h3>
             <div>
               <Button
-                sx={{ m: 0.6, p: 0.5 }}
-                variant="outlined"
                 onClick={() => editTask(task.completed, task.text, task.id)}
-                startIcon={<EditIcon />}
               >
-                Edit
+                <FontAwesomeIcon icon={faPenToSquare} />
               </Button>
               <Button
-                sx={{ m: 0.2, p: 0.5 }}
-                variant="outlined"
-                color="error"
                 startIcon={<DeleteIcon />}
                 onClick={() => showDeleteModal(task.id)}
               >
-                Delete
+                <FontAwesomeIcon icon="fa-solid fa-trash" />
               </Button>
+
               <Button onClick={() => markAsImportant(task.id)}>
                 <Tooltip title="mark as important!">
                   <PriorityHighIcon
@@ -129,6 +131,17 @@ const Todo = React.memo(
                   </svg>
                 </Tooltip>
               </Button>
+
+              <Tooltip title="move up!">
+                <Button onClick={() => moveUp(index)}>
+                  <FontAwesomeIcon icon={faArrowUp} />
+                </Button>
+              </Tooltip>
+              <Tooltip title="move down!">
+                <Button onClick={() => moveDown(index)}>
+                  <FontAwesomeIcon icon={faArrowDown} />
+                </Button>
+              </Tooltip>
             </div>
           </li>
         ) : null}

@@ -13,11 +13,14 @@ const TodoList = React.memo(
     dragenter,
     lastAddedTaskId,
     drop,
+    moveUp,
+    moveDown,
+    index,
   }) => {
     return (
       <>
         <ul className="list-container">
-          {tasks.map((task) => (
+          {tasks.map((task, index) => (
             <Todo
               task={task}
               completeTask={completeTask}
@@ -29,6 +32,8 @@ const TodoList = React.memo(
               drop={drop}
               key={task.id}
               lastAddedTaskId={lastAddedTaskId}
+              moveUp={() => moveUp(index)}
+              moveDown={() => moveDown(index)}
             />
           ))}
         </ul>

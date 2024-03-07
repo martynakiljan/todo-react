@@ -10,7 +10,7 @@ function App() {
 
   return (
     <div className="App">
-      <Container maxWidth="sm">
+      <Container maxWidth="md">
         <h1 className="todo-title">TODO LIST</h1>
         <TodoContainer tasks={tasks} setTasks={setTasks} />
       </Container>

@@ -62,12 +62,12 @@ const TodoContainer = React.memo(({ tasks, setTasks }) => {
         completed: false,
         important: false,
       };
-      setTasks([...tasks, newTask]);
+      setTasks((tasks) => [...tasks, newTask]);
       setText("");
       setIsEdited(false);
       setLastAddedTaskId(newTask.id);
     }
-  }, [tasks, setTasks, text]);
+  }, [setTasks, text, setText, setIsEdited, setLastAddedTaskId]);
 
   const closeModalandDelete = () => {
     deleteTask();
@@ -132,14 +132,50 @@ const TodoContainer = React.memo(({ tasks, setTasks }) => {
     dragOverItem.current = null;
   }, [dragItem, setTasks, tasks]);
 
+  const moveUp = (index) => {
+    setTasks((prevTasks) => {
+      if (index > 0) {
+        const newTasks = [...prevTasks];
+        [newTasks[index], newTasks[index - 1]] = [
+          newTasks[index - 1],
+          newTasks[index],
+        ];
+        return newTasks;
+      } else {
+        const newTasks = [...prevTasks];
+        const firstTask = newTasks.shift();
+        newTasks.push(firstTask);
+        return newTasks;
+      }
+    });
+  };
+
+  const moveDown = (index) => {
+    setTasks((prevTasks) => {
+      const newTasks = [...prevTasks];
+      if (index < tasks.length - 1) {
+        [newTasks[index], newTasks[index + 1]] = [
+          newTasks[index + 1],
+          newTasks[index],
+        ];
+        return newTasks;
+      } else {
+        const lastTask = newTasks.pop();
+        newTasks.unshift(lastTask);
+        return newTasks;
+      }
+    });
+  };
+
   return (
-    <Card sx={{ pt: 5, pb: 5, pr: 3, pl: 3 }}>
+    <Card sx={{ pt: 5, pb: 5, pr: 2, pl: 3, width: "100%" }}>
       {/* <pre>{JSON.stringify(tasks, null, 2)}</pre> */}
       <Grid
         container
         direction="row"
         justifyContent="center"
         alignItems="center"
+        sx={{ width: "100%" }}
       >
         <FormControl defaultValue="">
           <FormLabel
@@ -148,7 +184,7 @@ const TodoContainer = React.memo(({ tasks, setTasks }) => {
             variant="h3"
           >
             <Typography
-              variant="h7"
+              variant="h6"
               sx={{ color: "primary.main", paddingBottom: 1 }}
             >
               {" "}
@@ -189,6 +225,8 @@ const TodoContainer = React.memo(({ tasks, setTasks }) => {
                 dragstart={dragstart}
                 drop={drop}
                 lastAddedTaskId={lastAddedTaskId}
+                moveUp={moveUp}
+                moveDown={moveDown}
               />
               <Info tasks={tasks} />
               {confirmation ? (
