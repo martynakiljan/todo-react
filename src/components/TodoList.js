@@ -15,7 +15,6 @@ const TodoList = React.memo(
     drop,
     moveUp,
     moveDown,
-    index,
   }) => {
     return (
       <>

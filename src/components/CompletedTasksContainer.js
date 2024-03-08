@@ -12,12 +12,7 @@ const CompletedTaskContainer = ({ tasks }) => {
   return (
     <Card sx={{ pt: 5, pb: 5, pr: 3, pl: 3 }}>
       {/* <pre>{JSON.stringify(tasks, null, 2)}</pre> */}
-      <Grid
-        container
-        direction="row"
-        justifyContent="center"
-        alignItems="center"
-      >
+      <Grid>
         <div className="completedTasks__inner">
           {completedTasks.length !== 0 ? (
             <ul className="list-container">

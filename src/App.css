@@ -20,6 +20,12 @@ body {
   margin-top: 50px;
 }
 
+.list-item__part1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .todo-title {
   font-family: "Architects Daughter", cursive;
   font-weight: 400;
@@ -99,6 +105,4 @@ body {
   color: green;
 }
 
-.css-1e6y48t-MuiButtonBase-root-MuiButton-root {
-  min-width: 50px!important;
-}
+

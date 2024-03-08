@@ -5,7 +5,7 @@ import TodoList from "./TodoList";
 import FormLabel from "@mui/joy/FormLabel";
 import Button from "@mui/material/Button";
 import { OutlinedInput, Alert, Typography, Card } from "@mui/material";
-import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import Info from "./Info";
 import ConfirmationModal from "./ConfirmationModal";
 
@@ -168,16 +168,15 @@ const TodoContainer = React.memo(({ tasks, setTasks }) => {
   };
 
   return (
-    <Card sx={{ pt: 5, pb: 5, pr: 2, pl: 3, width: "100%" }}>
+    <Card sx={{ p: "20px 20px" }}>
       {/* <pre>{JSON.stringify(tasks, null, 2)}</pre> */}
-      <Grid
-        container
+      <Box
         direction="row"
         justifyContent="center"
         alignItems="center"
         sx={{ width: "100%" }}
       >
-        <FormControl defaultValue="">
+        <FormControl>
           <FormLabel
             className="label"
             sx={{ color: "primary.main" }}
@@ -237,12 +236,15 @@ const TodoContainer = React.memo(({ tasks, setTasks }) => {
               ) : null}
             </>
           ) : (
-            <Alert severity="error" sx={{ m: 5 }}>
+            <Alert
+              severity="error"
+              sx={{ m: 5, width: "50%", margin: "20px auto" }}
+            >
               No tasks
             </Alert>
           )}
         </FormControl>
-      </Grid>
+      </Box>
     </Card>
   );
 });

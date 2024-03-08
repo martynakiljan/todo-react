@@ -11,19 +11,19 @@ const ConfirmationModal = ({ closeModalandDelete, closeModalandDoNothing }) => {
         <Alert
           variant="outlined"
           severity="warning"
-          sx={{ bgcolor: "background.paper" }}
+          sx={{ bgcolor: "background.paper", padding: "50px 20px" }}
         >
-          this operation is irreversible. Are you sure ?
+          This operation is irreversible. Are you sure ?
           <div>
             <Button
-              sx={{ m: 2 }}
+              sx={{ p: 0.5 }}
               variant="contained"
               onClick={closeModalandDoNothing}
             >
               NO
             </Button>
             <Button
-              sx={{ m: 2 }}
+              sx={{ m: 2, p: 0.5 }}
               variant="outlined"
               onClick={closeModalandDelete}
             >
