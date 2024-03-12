@@ -1,5 +1,5 @@
 /** @format */
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { FormControl } from "@mui/base/FormControl";
 import TodoList from "./TodoList";
 import FormLabel from "@mui/joy/FormLabel";
@@ -8,6 +8,7 @@ import { OutlinedInput, Alert, Typography, Card } from "@mui/material";
 import Box from "@mui/material/Box";
 import Info from "./Info";
 import ConfirmationModal from "./ConfirmationModal";
+import { ThemeContext } from "../context/context";
 
 const TodoContainer = React.memo(({ tasks, setTasks }) => {
   const [text, setText] = useState("");
@@ -16,6 +17,7 @@ const TodoContainer = React.memo(({ tasks, setTasks }) => {
   const [confirmation, setConfirmation] = useState(false);
   const [idDeletedTask, setIdDeletedTask] = useState(0);
   const [lastAddedTaskId, setLastAddedTaskId] = useState(null);
+  const theme = useContext(ThemeContext);
 
   const editTask = React.useCallback(
     (completed, text, id) => {
@@ -185,6 +187,7 @@ const TodoContainer = React.memo(({ tasks, setTasks }) => {
             <Typography
               variant="h6"
               sx={{ color: "primary.main", paddingBottom: 1 }}
+              color={theme === "light" ? "primary" : "secondary"}
             >
               {" "}
               Your task:

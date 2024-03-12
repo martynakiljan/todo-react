@@ -1,5 +1,5 @@
 /** @format */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Checkbox from "@mui/material/Checkbox";
@@ -13,8 +13,8 @@ import {
   faArrowDown,
   faPenToSquare,
   faHand,
-  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
+import { ThemeContext } from "../context/context";
 
 const Todo = React.memo(
   ({
@@ -36,6 +36,8 @@ const Todo = React.memo(
       margin: "20px auto",
     };
     const [loading, setLoading] = useState(false);
+    const theme = useContext(ThemeContext);
+  
 
     // useEffect(() => {
     //   czemu ten kod nie dziala a ten na dole dziala?
@@ -53,7 +55,6 @@ const Todo = React.memo(
       return () => clearTimeout(timer);
     }, []);
 
-    console.log(task);
     return (
       <>
         {loading ? (
