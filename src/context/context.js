@@ -1,4 +1,4 @@
 /** @format */
 import { createContext } from "react";
 
-export const ThemeContext = createContext({ changeMode: () => {} });
+export const ThemeContext = createContext(null);

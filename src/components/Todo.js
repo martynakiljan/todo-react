@@ -36,7 +36,7 @@ const Todo = React.memo(
       margin: "20px auto",
     };
     const [loading, setLoading] = useState(false);
-    const theme = useContext(ThemeContext);
+    const { mode, theme } = useContext(ThemeContext);
 
     // useEffect(() => {
     //   czemu ten kod nie dziala a ten na dole dziala?
@@ -87,9 +87,9 @@ const Todo = React.memo(
                   task.important ? "list-title important" : "list-title"
                 }
                 color={
-                  theme.mode === "dark"
-                    ? theme.theme.palette.dark.main
-                    : theme.theme.palette.light.main
+                  mode === "dark"
+                    ? theme.palette.dark.main
+                    : theme.palette.light.main
                 }
               >
                 {" "}
@@ -104,9 +104,9 @@ const Todo = React.memo(
                 <FontAwesomeIcon
                   icon={faPenToSquare}
                   color={
-                    theme.mode === "dark"
-                      ? theme.theme.palette.dark.main
-                      : theme.theme.palette.light.main
+                    mode === "dark"
+                      ? theme.palette.dark.main
+                      : theme.palette.light.main
                   }
                 />
               </Button>
@@ -117,9 +117,9 @@ const Todo = React.memo(
                 <FontAwesomeIcon
                   icon={faTrash}
                   color={
-                    theme.mode === "dark"
-                      ? theme.theme.palette.dark.main
-                      : theme.theme.palette.light.main
+                    mode === "dark"
+                      ? theme.palette.dark.main
+                      : theme.palette.light.main
                   }
                 />
               </Button>
@@ -128,9 +128,9 @@ const Todo = React.memo(
                   <FontAwesomeIcon
                     icon={faHand}
                     color={
-                      theme.mode === "dark"
-                        ? theme.theme.palette.dark.main
-                        : theme.theme.palette.light.main
+                      mode === "dark"
+                        ? theme.palette.dark.main
+                        : theme.palette.light.main
                     }
                   />
                 </Tooltip>
@@ -143,9 +143,9 @@ const Todo = React.memo(
                   <FontAwesomeIcon
                     icon={faArrowUp}
                     color={
-                      theme.mode === "dark"
-                        ? theme.theme.palette.dark.main
-                        : theme.theme.palette.light.main
+                      mode === "dark"
+                        ? theme.palette.dark.main
+                        : theme.palette.light.main
                     }
                   />
                 </Button>
@@ -158,9 +158,9 @@ const Todo = React.memo(
                   <FontAwesomeIcon
                     icon={faArrowDown}
                     color={
-                      theme.mode === "dark"
-                        ? theme.theme.palette.dark.main
-                        : theme.theme.palette.light.main
+                      mode === "dark"
+                        ? theme.palette.dark.main
+                        : theme.palette.light.main
                     }
                   />
                 </Button>
