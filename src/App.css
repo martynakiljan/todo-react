@@ -16,7 +16,7 @@ background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 100%, rgba
   color: white;
 }
 
-.list-title {
+.list-title:not(.list-title__completed) {
     color: #020028;
   }
 }
