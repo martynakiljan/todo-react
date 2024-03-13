@@ -17,7 +17,8 @@ const TodoContainer = React.memo(({ tasks, setTasks }) => {
   const [confirmation, setConfirmation] = useState(false);
   const [idDeletedTask, setIdDeletedTask] = useState(0);
   const [lastAddedTaskId, setLastAddedTaskId] = useState(null);
-  const theme = useContext(ThemeContext);
+
+  const { mode, theme } = useContext(ThemeContext);
 
   const editTask = React.useCallback(
     (completed, text, id) => {
@@ -59,7 +60,7 @@ const TodoContainer = React.memo(({ tasks, setTasks }) => {
   const addTask = React.useCallback(() => {
     if (text.length > 1) {
       const newTask = {
-        id: Date.now(),
+        id: crypto.randomUUID(),
         text,
         completed: false,
         important: false,
@@ -179,22 +180,14 @@ const TodoContainer = React.memo(({ tasks, setTasks }) => {
         sx={{ width: "100%" }}
       >
         <FormControl>
-          <FormLabel
-            className="label"
-            color={
-              theme.mode === "dark"
-                ? theme.theme.palette.dark.main
-                : theme.theme.palette.light.main
-            }
-            variant="h3"
-          >
+          <FormLabel className="label" color="primar" variant="h3">
             <Typography
               variant="h6"
               sx={{ paddingBottom: 1 }}
               color={
-                theme.mode === "dark"
-                  ? theme.theme.palette.dark.main
-                  : theme.theme.palette.light.main
+                mode === "dark"
+                  ? theme.palette.dark.main
+                  : theme.palette.light.main
               }
             >
               {" "}
@@ -215,9 +208,9 @@ const TodoContainer = React.memo(({ tasks, setTasks }) => {
 
           <Button
             variant="contained"
-            color="primary"
             disabled={disable}
             onClick={addTask}
+            color="primary"
           >
             {isEdited ? "Edit Task" : "Add Task"}
           </Button>

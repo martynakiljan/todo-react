@@ -69,7 +69,7 @@ const Todo = React.memo(
           <li
             key={task.id}
             id={task.id}
-            className={task.completed ? "list-item completed" : "list-item"}
+            className={`list-item ${task.completed ? "completed" : ""} `}
             onDragStart={(e) => dragstart(e, task.id)}
             onDragEnter={(e) => dragenter(e)}
             onDragOver={(e) => e.preventDefault()}
