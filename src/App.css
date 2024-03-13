@@ -15,6 +15,10 @@ background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 100%, rgba
 .fa-brush {
   color: white;
 }
+
+.list-title {
+    color: #020028;
+  }
 }
 
 .list-item {
@@ -65,9 +69,11 @@ background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 100%, rgba
 
 .list-title {
   min-width: 150px;
-    font-family: "Architects Daughter", cursive;
-    list-style: none;
+  font-family: "Architects Daughter", cursive;
+  list-style: none;
+  color: #1976d2;
 }
+
 
 .list-button {
    margin: 0 5px;

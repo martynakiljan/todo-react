@@ -181,13 +181,21 @@ const TodoContainer = React.memo(({ tasks, setTasks }) => {
         <FormControl>
           <FormLabel
             className="label"
-            sx={{ color: "primary.main" }}
+            color={
+              theme.mode === "dark"
+                ? theme.theme.palette.dark.main
+                : theme.theme.palette.light.main
+            }
             variant="h3"
           >
             <Typography
               variant="h6"
-              sx={{ color: "primary.main", paddingBottom: 1 }}
-              color={theme === "light" ? "primary" : "secondary"}
+              sx={{ paddingBottom: 1 }}
+              color={
+                theme.mode === "dark"
+                  ? theme.theme.palette.dark.main
+                  : theme.theme.palette.light.main
+              }
             >
               {" "}
               Your task:

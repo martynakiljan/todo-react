@@ -8,33 +8,44 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBrush } from "@fortawesome/free-solid-svg-icons";
 import Tooltip from "@mui/material/Tooltip";
 import { ThemeContext } from "./context/context.js";
+import { createTheme } from "@mui/material/styles";
 
 function App() {
   const [tasks, setTasks] = useState([]);
-  const [theme, setTheme] = useState("light");
+  const [mode, setMode] = useState("light");
+
+  const theme = createTheme({
+    palette: {
+      light: {
+        main: "#1976d2",
+      },
+      dark: {
+        main: "#020028",
+      },
+    },
+  });
+
+  const changeMode = () => {
+    setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+  };
 
   useEffect(() => {
-    if (theme === "light") {
+    if (mode === "light") {
       document.body.classList.add("theme-light");
       document.body.classList.remove("theme-dark");
     } else {
       document.body.classList.add("theme-dark");
       document.body.classList.remove("theme-light");
     }
-  }, [theme]);
+  }, [mode]);
 
   return (
-    <ThemeContext.Provider value={theme}>
+    <ThemeContext.Provider value={{ theme, mode }}>
       <div className="App">
         <Container maxWidth="md">
           <h1 className="todo-title">TODO LIST</h1>
           <Tooltip title="you can change theme!">
-            <FontAwesomeIcon
-              icon={faBrush}
-              onClick={(e) => {
-                setTheme(theme === "light" ? "dark" : "light");
-              }}
-            />
+            <FontAwesomeIcon icon={faBrush} onClick={changeMode} />
           </Tooltip>
           <TodoContainer tasks={tasks} setTasks={setTasks} />
         </Container>

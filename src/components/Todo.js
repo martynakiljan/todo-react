@@ -1,7 +1,6 @@
 /** @format */
 import { useState, useEffect, useContext } from "react";
 import Button from "@mui/material/Button";
-import DeleteIcon from "@mui/icons-material/Delete";
 import Checkbox from "@mui/material/Checkbox";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import Tooltip from "@mui/material/Tooltip";
@@ -13,6 +12,7 @@ import {
   faArrowDown,
   faPenToSquare,
   faHand,
+  faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { ThemeContext } from "../context/context";
 
@@ -37,7 +37,6 @@ const Todo = React.memo(
     };
     const [loading, setLoading] = useState(false);
     const theme = useContext(ThemeContext);
-  
 
     // useEffect(() => {
     //   czemu ten kod nie dziala a ten na dole dziala?
@@ -87,6 +86,11 @@ const Todo = React.memo(
                 className={
                   task.important ? "list-title important" : "list-title"
                 }
+                color={
+                  theme.mode === "dark"
+                    ? theme.theme.palette.dark.main
+                    : theme.theme.palette.light.main
+                }
               >
                 {" "}
                 {task.text}
@@ -97,16 +101,38 @@ const Todo = React.memo(
                 sx={{ minHeight: 0, minWidth: 0, padding: 2 }}
                 onClick={() => editTask(task.completed, task.text, task.id)}
               >
-                <FontAwesomeIcon icon={faPenToSquare} />
+                <FontAwesomeIcon
+                  icon={faPenToSquare}
+                  color={
+                    theme.mode === "dark"
+                      ? theme.theme.palette.dark.main
+                      : theme.theme.palette.light.main
+                  }
+                />
               </Button>
               <Button
                 sx={{ minHeight: 0, minWidth: 0, padding: 2, margin: 0 }}
-                startIcon={<DeleteIcon />}
                 onClick={() => showDeleteModal(task.id)}
-              ></Button>
+              >
+                <FontAwesomeIcon
+                  icon={faTrash}
+                  color={
+                    theme.mode === "dark"
+                      ? theme.theme.palette.dark.main
+                      : theme.theme.palette.light.main
+                  }
+                />
+              </Button>
               <Button sx={{ minHeight: 0, minWidth: 0, padding: 2 }}>
                 <Tooltip title="you can move this task!">
-                  <FontAwesomeIcon icon={faHand} />
+                  <FontAwesomeIcon
+                    icon={faHand}
+                    color={
+                      theme.mode === "dark"
+                        ? theme.theme.palette.dark.main
+                        : theme.theme.palette.light.main
+                    }
+                  />
                 </Tooltip>
               </Button>
               <Tooltip title="move up!">
@@ -114,7 +140,14 @@ const Todo = React.memo(
                   onClick={() => moveUp(index)}
                   sx={{ minHeight: 0, minWidth: 0, padding: 2 }}
                 >
-                  <FontAwesomeIcon icon={faArrowUp} />
+                  <FontAwesomeIcon
+                    icon={faArrowUp}
+                    color={
+                      theme.mode === "dark"
+                        ? theme.theme.palette.dark.main
+                        : theme.theme.palette.light.main
+                    }
+                  />
                 </Button>
               </Tooltip>
               <Tooltip title="move down!">
@@ -122,7 +155,14 @@ const Todo = React.memo(
                   onClick={() => moveDown(index)}
                   sx={{ minHeight: 0, minWidth: 0, padding: 2 }}
                 >
-                  <FontAwesomeIcon icon={faArrowDown} />
+                  <FontAwesomeIcon
+                    icon={faArrowDown}
+                    color={
+                      theme.mode === "dark"
+                        ? theme.theme.palette.dark.main
+                        : theme.theme.palette.light.main
+                    }
+                  />
                 </Button>
               </Tooltip>
               <Button
