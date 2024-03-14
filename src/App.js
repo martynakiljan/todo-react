@@ -16,9 +16,6 @@ import { DarkMode } from "@mui/icons-material";
 function App() {
   const [tasks, setTasks] = useState([]);
   const [mode, setMode] = useState("light");
-
-  console.log(mode);
-
   const theme = createTheme({
     palette: {
       light: {

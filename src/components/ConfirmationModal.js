@@ -11,7 +11,7 @@ const ConfirmationModal = ({ closeModalandDelete, closeModalandDoNothing }) => {
         <Alert
           variant="outlined"
           severity="warning"
-          sx={{ bgcolor: "background.paper", padding: "50px 20px" }}
+          sx={{ bgcolor: "background.paper", padding: "20px 60px" }}
         >
           This operation is irreversible. Are you sure ?
           <div>

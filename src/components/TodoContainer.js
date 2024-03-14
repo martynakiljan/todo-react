@@ -198,6 +198,11 @@ const TodoContainer = React.memo(({ tasks, setTasks }) => {
             placeholder="what should you do?"
             value={text}
             onChange={(e) => setText(e.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") {
+                addTask();
+              }
+            }}
             sx={{
               minWidth: "60%",
               padding: "0px",

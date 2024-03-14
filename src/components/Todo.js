@@ -97,32 +97,36 @@ const Todo = React.memo(
               </h3>
             </div>
             <div>
-              <Button
-                sx={{ minHeight: 0, minWidth: 0, padding: 2 }}
-                onClick={() => editTask(task.completed, task.text, task.id)}
-              >
-                <FontAwesomeIcon
-                  icon={faPenToSquare}
-                  color={
-                    mode === "dark"
-                      ? theme.palette.dark.main
-                      : theme.palette.light.main
-                  }
-                />
-              </Button>
-              <Button
-                sx={{ minHeight: 0, minWidth: 0, padding: 2, margin: 0 }}
-                onClick={() => showDeleteModal(task.id)}
-              >
-                <FontAwesomeIcon
-                  icon={faTrash}
-                  color={
-                    mode === "dark"
-                      ? theme.palette.dark.main
-                      : theme.palette.light.main
-                  }
-                />
-              </Button>
+              <Tooltip title="you can edit this task!">
+                <Button
+                  sx={{ minHeight: 0, minWidth: 0, padding: 2 }}
+                  onClick={() => editTask(task.completed, task.text, task.id)}
+                >
+                  <FontAwesomeIcon
+                    icon={faPenToSquare}
+                    color={
+                      mode === "dark"
+                        ? theme.palette.dark.main
+                        : theme.palette.light.main
+                    }
+                  />
+                </Button>
+              </Tooltip>
+              <Tooltip title="you can delete this task!">
+                <Button
+                  sx={{ minHeight: 0, minWidth: 0, padding: 2, margin: 0 }}
+                  onClick={() => showDeleteModal(task.id)}
+                >
+                  <FontAwesomeIcon
+                    icon={faTrash}
+                    color={
+                      mode === "dark"
+                        ? theme.palette.dark.main
+                        : theme.palette.light.main
+                    }
+                  />
+                </Button>
+              </Tooltip>
               <Button sx={{ minHeight: 0, minWidth: 0, padding: 2 }}>
                 <Tooltip title="you can move this task!">
                   <FontAwesomeIcon
