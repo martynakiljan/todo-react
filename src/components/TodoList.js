@@ -10,8 +10,8 @@ const TodoList = React.memo(
     markAsImportant,
     showDeleteModal,
     dragstart,
+    deleteTask,
     dragenter,
-    lastAddedTaskId,
     drop,
     moveUp,
     moveDown,
@@ -23,6 +23,7 @@ const TodoList = React.memo(
             <Todo
               task={task}
               completeTask={completeTask}
+              deleteTask={deleteTask}
               editTask={editTask}
               markAsImportant={markAsImportant}
               showDeleteModal={showDeleteModal}
@@ -30,9 +31,8 @@ const TodoList = React.memo(
               dragstart={dragstart}
               drop={drop}
               key={task.id}
-              lastAddedTaskId={lastAddedTaskId}
-              moveUp={() => moveUp(index)}
-              moveDown={() => moveDown(index)}
+              moveUp={moveUp}
+              moveDown={moveDown}
             />
           ))}
         </ul>

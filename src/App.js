@@ -4,7 +4,6 @@ import "./App.css";
 import TodoContainer from "./components/TodoContainer";
 import Container from "@mui/material/Container";
 import CompletedTaskContainer from "./components/CompletedTasksContainer";
-
 import Tooltip from "@mui/material/Tooltip";
 import { ThemeContext } from "./context/context.js";
 import { createTheme } from "@mui/material/styles";
@@ -16,6 +15,7 @@ import { DarkMode } from "@mui/icons-material";
 function App() {
   const [tasks, setTasks] = useState([]);
   const [mode, setMode] = useState("light");
+
   const theme = createTheme({
     palette: {
       light: {
@@ -50,14 +50,14 @@ function App() {
             <IconButton onClick={changeMode} color="inherit">
               {
                 <Typography
-                  color={mode === "light" ? "black" : "primary"}
+                  color={mode === "light" ? "black" : "rgb(92, 139, 194)"}
                   sx={{ pr: 1 }}
                 >
                   {mode === "light" ? "dark" : "light"} mode
                 </Typography>
               }
               {mode === "dark" ? (
-                <Brightness7Icon color="primary" />
+                <Brightness7Icon style={{ color: "rgb(92, 139, 194)" }} />
               ) : (
                 <DarkMode />
               )}

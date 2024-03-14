@@ -1,5 +1,11 @@
 /** @format */
-import React, { useEffect, useState, useRef, useContext } from "react";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useContext,
+  useCallback,
+} from "react";
 import { FormControl } from "@mui/base/FormControl";
 import TodoList from "./TodoList";
 import FormLabel from "@mui/joy/FormLabel";
@@ -7,17 +13,12 @@ import Button from "@mui/material/Button";
 import { OutlinedInput, Alert, Typography, Card } from "@mui/material";
 import Box from "@mui/material/Box";
 import Info from "./Info";
-import ConfirmationModal from "./ConfirmationModal";
 import { ThemeContext } from "../context/context";
 
 const TodoContainer = React.memo(({ tasks, setTasks }) => {
   const [text, setText] = useState("");
   const [disable, setDisable] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
-  const [confirmation, setConfirmation] = useState(false);
-  const [idDeletedTask, setIdDeletedTask] = useState(0);
-  const [lastAddedTaskId, setLastAddedTaskId] = useState(null);
-
   const { mode, theme } = useContext(ThemeContext);
 
   const editTask = React.useCallback(
@@ -30,28 +31,23 @@ const TodoContainer = React.memo(({ tasks, setTasks }) => {
     [setText, setIsEdited, setTasks]
   );
 
-  const markAsImportant = React.useCallback(
-    (id) => {
-      const importantTask = tasks.map((task) => {
-        if (task.id === id) {
-          task.important = !task.important;
-        }
-        return task;
-      });
-      setTasks(importantTask);
-    },
-    [tasks, setTasks]
-  );
-
-  const completeTask = React.useCallback(
+  const markAsImportant = useCallback(
     (id) => {
       setTasks((tasks) =>
-        tasks.map((task) => {
-          if (task.id === id) {
-            task.completed = !task.completed;
-          }
-          return task;
-        })
+        tasks.map((task) =>
+          task.id !== id ? task : { ...task, important: !task.important }
+        )
+      );
+    },
+    [setTasks]
+  );
+
+  const completeTask = useCallback(
+    (id) => {
+      setTasks((tasks) =>
+        tasks.map((task) =>
+          task.id !== id ? task : { ...task, completed: !task.completed }
+        )
       );
     },
     [setTasks]
@@ -68,67 +64,55 @@ const TodoContainer = React.memo(({ tasks, setTasks }) => {
       setTasks((tasks) => [...tasks, newTask]);
       setText("");
       setIsEdited(false);
-      setLastAddedTaskId(newTask.id);
     }
-  }, [setTasks, text, setText, setIsEdited, setLastAddedTaskId]);
+  }, [setTasks, text, setText, setIsEdited]);
 
-  const closeModalandDelete = () => {
-    deleteTask();
-  };
-
-  const closeModalandDoNothing = React.useCallback(() => {
-    setConfirmation(false);
-  }, [setConfirmation]);
-
-  const showDeleteModal = React.useCallback(
-    (id) => {
-      setConfirmation(true);
-      setIdDeletedTask(id);
+  const deleteTask = useCallback(
+    (taskId) => {
+      setTasks((tasks) => tasks.filter((item) => item.id !== taskId));
     },
-    [setConfirmation, setIdDeletedTask]
+    [setTasks]
   );
 
-  const deleteTask = React.useCallback(() => {
-    setConfirmation(false);
-    setTasks((tasks) => tasks.filter((item) => item.id !== idDeletedTask));
-  }, [setConfirmation, setTasks, idDeletedTask]);
-
   useEffect(() => {
-    if (text.trim().length < 1) {
-      setDisable(true);
-    } else {
-      setDisable(false);
-    }
+    setDisable(text.trim().length < 2);
   }, [text]);
 
   const dragItem = useRef();
   const dragOverItem = useRef();
 
-  const dragstart = React.useCallback(
+  const dragstart = useCallback(
     (id) => {
       dragItem.current = id;
+      console.log(dragItem);
     },
     [dragItem]
   );
 
-  const dragenter = React.useCallback(
-    (e) => {
-      dragOverItem.current = e.currentTarget.id;
+  const dragenter = useCallback(
+    (id) => {
+      dragOverItem.current = id;
     },
     [dragOverItem]
   );
 
-  const drop = React.useCallback(() => {
+  const drop = useCallback(() => {
     const dragItemIndex = tasks.findIndex(
       (task) => task.id === dragItem.current
     );
 
     if (dragItemIndex !== -1) {
-      const copyListItems = [...tasks];
-      const dragItemContent = copyListItems[dragItemIndex];
-      copyListItems.splice(dragItemIndex, 1);
-      copyListItems.splice(dragOverItem.current, 0, dragItemContent);
-      setTasks(copyListItems);
+      const dragOverItemIndex = tasks.findIndex(
+        (task) => task.id === dragOverItem.current
+      );
+      setTasks((tasks) => {
+        const newTasks = [...tasks];
+        const temp = newTasks[dragItemIndex];
+        console.log(temp);
+        newTasks[dragItemIndex] = newTasks[dragOverItemIndex];
+        newTasks[dragOverItemIndex] = temp;
+        return newTasks;
+      });
     }
 
     dragItem.current = null;
@@ -171,10 +155,13 @@ const TodoContainer = React.memo(({ tasks, setTasks }) => {
   };
 
   return (
-    <Card sx={{ p: "20px 20px" }}>
+    <Card
+      sx={{ p: "20px 20px" }}
+      style={{ background: mode === "dark" ? "#5c8bc2" : "white" }}
+    >
       {/* <pre>{JSON.stringify(tasks, null, 2)}</pre> */}
       <Box
-        direction="row"
+        flexDirection="row"
         justifyContent="center"
         alignItems="center"
         sx={{ width: "100%" }}
@@ -227,22 +214,14 @@ const TodoContainer = React.memo(({ tasks, setTasks }) => {
                 deleteTask={deleteTask}
                 completeTask={completeTask}
                 editTask={editTask}
-                showDeleteModal={showDeleteModal}
                 markAsImportant={markAsImportant}
                 dragenter={dragenter}
                 dragstart={dragstart}
                 drop={drop}
-                lastAddedTaskId={lastAddedTaskId}
                 moveUp={moveUp}
                 moveDown={moveDown}
               />
               <Info tasks={tasks} />
-              {confirmation ? (
-                <ConfirmationModal
-                  closeModalandDoNothing={closeModalandDoNothing}
-                  closeModalandDelete={closeModalandDelete}
-                />
-              ) : null}
             </>
           ) : (
             <Alert

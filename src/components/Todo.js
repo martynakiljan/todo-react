@@ -6,6 +6,7 @@ import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import Tooltip from "@mui/material/Tooltip";
 import ClipLoader from "react-spinners/ClipLoader";
 import React from "react";
+import ConfirmationModal from "./ConfirmationModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowUp,
@@ -22,10 +23,9 @@ const Todo = React.memo(
     completeTask,
     editTask,
     markAsImportant,
-    showDeleteModal,
     dragstart,
     dragenter,
-    lastAddedTaskId,
+    deleteTask,
     drop,
     moveUp,
     moveDown,
@@ -37,22 +37,30 @@ const Todo = React.memo(
     };
     const [loading, setLoading] = useState(false);
     const { mode, theme } = useContext(ThemeContext);
-
-    // useEffect(() => {
-    //   czemu ten kod nie dziala a ten na dole dziala?
-    //   setTimeout(() => {
-    //     setLoading(false);
-    //   }, 1000);
-    // }, []);
+    const [taskIdToDelete, setTaskIdToDelete] = useState(null);
+    const [confirmation, setConfirmation] = useState(false);
 
     useEffect(() => {
       setLoading(true);
       const timer = setTimeout(() => {
         setLoading(false);
       }, 300);
-
       return () => clearTimeout(timer);
     }, []);
+
+    const closeModalandDelete = () => {
+      setConfirmation(false);
+      deleteTask(taskIdToDelete);
+    };
+
+    const closeModalandDoNothing = () => {
+      setConfirmation(false);
+    };
+
+    const showDeleteModal = (taskId) => {
+      setTaskIdToDelete(taskId);
+      setConfirmation(true);
+    };
 
     return (
       <>
@@ -65,129 +73,162 @@ const Todo = React.memo(
             cssOverride={spinner}
             data-testid="loader"
           />
-        ) : lastAddedTaskId ? (
-          <li
-            key={task.id}
-            id={task.id}
-            className={`list-item ${task.completed ? "completed" : ""} `}
-            onDragStart={(e) => dragstart(e, task.id)}
-            onDragEnter={(e) => dragenter(e)}
-            onDragOver={(e) => e.preventDefault()}
-            onDrop={(e) => drop(e)}
-            draggable
-          >
-            <div className="list-item__part1">
-              <Checkbox
-                onChange={() => completeTask(task.id)}
-                color="primary"
-                inputProps={{ "aria-label": "controlled" }}
+        ) : (
+          <>
+            {confirmation ? (
+              <ConfirmationModal
+                closeModalandDoNothing={closeModalandDoNothing}
+                closeModalandDelete={closeModalandDelete}
               />
-              <h3
-                className={
-                  task.important ? "list-title important" : "list-title"
-                }
-                color={
-                  mode === "dark"
-                    ? theme.palette.dark.main
-                    : theme.palette.light.main
-                }
-              >
-                {" "}
-                {task.text}
-              </h3>
-            </div>
-            <div>
-              <Tooltip title="you can edit this task!">
-                <Button
-                  sx={{ minHeight: 0, minWidth: 0, padding: 2 }}
-                  onClick={() => editTask(task.completed, task.text, task.id)}
+            ) : null}
+            <li
+              key={task.id}
+              id={task.id}
+              className={`list-item ${task.completed ? "completed" : ""} `}
+              onDragStart={() => dragstart(task.id)}
+              onDragEnter={() => dragenter(task.id)}
+              onDragOver={(e) => e.preventDefault()}
+              onDrop={(e) => drop(e)}
+              draggable
+            >
+              <div className="list-item__part1">
+                <Checkbox
+                  onChange={() => completeTask(task.id)}
+                  color="primary"
+                  inputProps={{ "aria-label": "controlled" }}
+                />
+                <h3
+                  className={`list-title ${task.important ? "important" : ""} `}
+                  color={
+                    mode === "dark"
+                      ? theme.palette.dark.main
+                      : theme.palette.light.main
+                  }
                 >
-                  <FontAwesomeIcon
-                    icon={faPenToSquare}
-                    color={
-                      mode === "dark"
-                        ? theme.palette.dark.main
-                        : theme.palette.light.main
-                    }
-                  />
-                </Button>
-              </Tooltip>
-              <Tooltip title="you can delete this task!">
-                <Button
-                  sx={{ minHeight: 0, minWidth: 0, padding: 2, margin: 0 }}
-                  onClick={() => showDeleteModal(task.id)}
-                >
-                  <FontAwesomeIcon
-                    icon={faTrash}
-                    color={
-                      mode === "dark"
-                        ? theme.palette.dark.main
-                        : theme.palette.light.main
-                    }
-                  />
-                </Button>
-              </Tooltip>
-              <Button sx={{ minHeight: 0, minWidth: 0, padding: 2 }}>
-                <Tooltip title="you can move this task!">
-                  <FontAwesomeIcon
-                    icon={faHand}
-                    color={
-                      mode === "dark"
-                        ? theme.palette.dark.main
-                        : theme.palette.light.main
-                    }
-                  />
+                  {" "}
+                  {task.text}
+                </h3>
+              </div>
+              <div>
+                <Tooltip title="you can edit this task!">
+                  <Button
+                    sx={{
+                      minHeight: 0,
+                      minWidth: 0,
+                      padding: 2,
+                    }}
+                    onClick={() => editTask(task.completed, task.text, task.id)}
+                  >
+                    <FontAwesomeIcon
+                      icon={faPenToSquare}
+                      color={
+                        mode === "dark"
+                          ? theme.palette.dark.main
+                          : theme.palette.light.main
+                      }
+                    />
+                  </Button>
                 </Tooltip>
-              </Button>
-              <Tooltip title="move up!">
-                <Button
-                  onClick={() => moveUp(index)}
-                  sx={{ minHeight: 0, minWidth: 0, padding: 2 }}
-                >
-                  <FontAwesomeIcon
-                    icon={faArrowUp}
-                    color={
-                      mode === "dark"
-                        ? theme.palette.dark.main
-                        : theme.palette.light.main
-                    }
-                  />
-                </Button>
-              </Tooltip>
-              <Tooltip title="move down!">
-                <Button
-                  onClick={() => moveDown(index)}
-                  sx={{ minHeight: 0, minWidth: 0, padding: 2 }}
-                >
-                  <FontAwesomeIcon
-                    icon={faArrowDown}
-                    color={
-                      mode === "dark"
-                        ? theme.palette.dark.main
-                        : theme.palette.light.main
-                    }
-                  />
-                </Button>
-              </Tooltip>
-              <Button
-                onClick={() => markAsImportant(task.id)}
-                sx={{ minHeight: 0, minWidth: 0, padding: 2 }}
-              >
-                <Tooltip title="mark as important!">
-                  <PriorityHighIcon
-                    sx={
-                      task.important
-                        ? { color: "#d32f2f" }
-                        : {
-                            color: "text.disabled",
-                          }
-                    }
-                  />
+                <Tooltip title="you can delete this task!">
+                  <Button
+                    sx={{
+                      minHeight: 0,
+                      minWidth: 0,
+                      padding: 2,
+                      margin: 0,
+                    }}
+                    onClick={() => showDeleteModal(task.id)}
+                  >
+                    <FontAwesomeIcon
+                      icon={faTrash}
+                      color={
+                        mode === "dark"
+                          ? theme.palette.dark.main
+                          : theme.palette.light.main
+                      }
+                    />
+                  </Button>
                 </Tooltip>
-              </Button>
-            </div>
-          </li>
-        ) : null}
+                <Button
+                  sx={{
+                    minHeight: 0,
+                    minWidth: 0,
+                    padding: 2,
+                  }}
+                >
+                  <Tooltip title="you can move this task!">
+                    <FontAwesomeIcon
+                      icon={faHand}
+                      color={
+                        mode === "dark"
+                          ? theme.palette.dark.main
+                          : theme.palette.light.main
+                      }
+                    />
+                  </Tooltip>
+                </Button>
+                <Tooltip title="move up!">
+                  <Button
+                    onClick={() => moveUp(index)}
+                    sx={{
+                      minHeight: 0,
+                      minWidth: 0,
+                      padding: 2,
+                    }}
+                  >
+                    <FontAwesomeIcon
+                      icon={faArrowUp}
+                      color={
+                        mode === "dark"
+                          ? theme.palette.dark.main
+                          : theme.palette.light.main
+                      }
+                    />
+                  </Button>
+                </Tooltip>
+                <Tooltip title="move down!">
+                  <Button
+                    onClick={() => moveDown(index)}
+                    sx={{
+                      minHeight: 0,
+                      minWidth: 0,
+                      padding: 2,
+                    }}
+                  >
+                    <FontAwesomeIcon
+                      icon={faArrowDown}
+                      color={
+                        mode === "dark"
+                          ? theme.palette.dark.main
+                          : theme.palette.light.main
+                      }
+                    />
+                  </Button>
+                </Tooltip>
+                <Button
+                  onClick={() => markAsImportant(task.id)}
+                  sx={{
+                    minHeight: 0,
+                    minWidth: 0,
+                    padding: 2,
+                  }}
+                >
+                  <Tooltip title="mark as important!">
+                    <PriorityHighIcon
+                      sx={
+                        task.important
+                          ? { color: "#d32f2f" }
+                          : {
+                              color: "text.disabled",
+                            }
+                      }
+                    />
+                  </Tooltip>
+                </Button>
+              </div>
+            </li>
+          </>
+        )}
       </>
     );
   }
