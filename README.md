@@ -5,8 +5,5 @@
 
 technologies: REACT, NPM and MUI 
 
-*adding a task, deleting and editing.*
 
-
-<img width="699" alt="Zrzut ekranu 2024-02-28 o 19 00 29" src="https://github.com/martynakiljan/todo-react/assets/59742201/55ec9f60-27c5-4553-8dbf-3fcc475d3da4">
-
+<img width="1241" alt="Zrzut ekranu 2024-03-15 o 10 53 10" src="https://github.com/martynakiljan/todo-react/assets/59742201/6efad6fd-f5cc-4ccd-b90d-a3a0037d86cb">
