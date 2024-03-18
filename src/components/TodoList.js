@@ -15,6 +15,7 @@ const TodoList = React.memo(
     drop,
     moveUp,
     moveDown,
+    isEdited,
   }) => {
     return (
       <>
@@ -33,6 +34,7 @@ const TodoList = React.memo(
               key={task.id}
               moveUp={moveUp}
               moveDown={moveDown}
+              isEdited={isEdited}
             />
           ))}
         </ul>

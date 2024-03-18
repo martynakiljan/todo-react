@@ -27,6 +27,7 @@ const Todo = React.memo(
     dragenter,
     deleteTask,
     drop,
+    isEdited,
     moveUp,
     moveDown,
     index,
@@ -96,6 +97,7 @@ const Todo = React.memo(
                   onChange={() => completeTask(task.id)}
                   color="primary"
                   inputProps={{ "aria-label": "controlled" }}
+                  disabled={isEdited}
                 />
                 <h3
                   className={`list-title ${task.important ? "important" : ""} `}
@@ -118,6 +120,7 @@ const Todo = React.memo(
                       padding: 2,
                     }}
                     onClick={() => editTask(task.completed, task.text, task.id)}
+                    disabled={isEdited}
                   >
                     <FontAwesomeIcon
                       icon={faPenToSquare}
@@ -131,6 +134,7 @@ const Todo = React.memo(
                 </Tooltip>
                 <Tooltip title="you can delete this task!">
                   <Button
+                    disabled={isEdited}
                     sx={{
                       minHeight: 0,
                       minWidth: 0,
@@ -150,6 +154,7 @@ const Todo = React.memo(
                   </Button>
                 </Tooltip>
                 <Button
+                  disabled={isEdited}
                   sx={{
                     minHeight: 0,
                     minWidth: 0,
@@ -169,6 +174,7 @@ const Todo = React.memo(
                 </Button>
                 <Tooltip title="move up!">
                   <Button
+                    disabled={isEdited}
                     onClick={() => moveUp(index)}
                     sx={{
                       minHeight: 0,
@@ -188,6 +194,7 @@ const Todo = React.memo(
                 </Tooltip>
                 <Tooltip title="move down!">
                   <Button
+                    disabled={isEdited}
                     onClick={() => moveDown(index)}
                     sx={{
                       minHeight: 0,
@@ -206,6 +213,7 @@ const Todo = React.memo(
                   </Button>
                 </Tooltip>
                 <Button
+                  disabled={isEdited}
                   onClick={() => markAsImportant(task.id)}
                   sx={{
                     minHeight: 0,

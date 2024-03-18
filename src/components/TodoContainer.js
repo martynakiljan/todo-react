@@ -220,6 +220,7 @@ const TodoContainer = React.memo(({ tasks, setTasks }) => {
                 drop={drop}
                 moveUp={moveUp}
                 moveDown={moveDown}
+                isEdited={isEdited}
               />
               <Info tasks={tasks} />
             </>
