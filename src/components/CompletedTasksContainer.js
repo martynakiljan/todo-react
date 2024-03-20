@@ -33,7 +33,7 @@ const CompletedTaskContainer = ({ tasks }) => {
             </ul>
           ) : (
             <Alert severity="error" sx={{ m: 5 }}>
-              No completed tasks :(
+              No completed tasks 😬
             </Alert>
           )}
         </div>

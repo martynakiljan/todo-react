@@ -80,7 +80,7 @@ function App() {
         </Container>
         <Container maxWidth="sm">
           <h2 className="todo-title todo-title__completed">
-            COMPLETED TASKS :)
+            COMPLETED TASKS 😀
           </h2>
           <CompletedTaskContainer tasks={tasks} />
         </Container>
