@@ -1,5 +1,5 @@
 /** @format */
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
@@ -15,7 +15,6 @@ import {
   faHand,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-import { ThemeContext } from "../context/context";
 
 const Todo = React.memo(
   ({
@@ -37,7 +36,6 @@ const Todo = React.memo(
       margin: "20px auto",
     };
     const [loading, setLoading] = useState(false);
-    const { mode, theme } = useContext(ThemeContext);
     const [taskIdToDelete, setTaskIdToDelete] = useState(null);
     const [confirmation, setConfirmation] = useState(false);
 
@@ -101,11 +99,6 @@ const Todo = React.memo(
                 />
                 <h3
                   className={`list-title ${task.important ? "important" : ""} `}
-                  color={
-                    mode === "dark"
-                      ? theme.palette.dark.main
-                      : theme.palette.light.main
-                  }
                 >
                   {" "}
                   {task.text}
@@ -122,14 +115,7 @@ const Todo = React.memo(
                     onClick={() => editTask(task.completed, task.text, task.id)}
                     disabled={isEdited}
                   >
-                    <FontAwesomeIcon
-                      icon={faPenToSquare}
-                      color={
-                        mode === "dark"
-                          ? theme.palette.dark.main
-                          : theme.palette.light.main
-                      }
-                    />
+                    <FontAwesomeIcon icon={faPenToSquare} />
                   </Button>
                 </Tooltip>
                 <Tooltip title="you can delete this task!">
@@ -143,14 +129,7 @@ const Todo = React.memo(
                     }}
                     onClick={() => showDeleteModal(task.id)}
                   >
-                    <FontAwesomeIcon
-                      icon={faTrash}
-                      color={
-                        mode === "dark"
-                          ? theme.palette.dark.main
-                          : theme.palette.light.main
-                      }
-                    />
+                    <FontAwesomeIcon icon={faTrash} />
                   </Button>
                 </Tooltip>
                 <Button
@@ -162,14 +141,7 @@ const Todo = React.memo(
                   }}
                 >
                   <Tooltip title="you can move this task!">
-                    <FontAwesomeIcon
-                      icon={faHand}
-                      color={
-                        mode === "dark"
-                          ? theme.palette.dark.main
-                          : theme.palette.light.main
-                      }
-                    />
+                    <FontAwesomeIcon icon={faHand} />
                   </Tooltip>
                 </Button>
                 <Tooltip title="move up!">
@@ -182,14 +154,7 @@ const Todo = React.memo(
                       padding: 2,
                     }}
                   >
-                    <FontAwesomeIcon
-                      icon={faArrowUp}
-                      color={
-                        mode === "dark"
-                          ? theme.palette.dark.main
-                          : theme.palette.light.main
-                      }
-                    />
+                    <FontAwesomeIcon icon={faArrowUp} />
                   </Button>
                 </Tooltip>
                 <Tooltip title="move down!">
@@ -202,14 +167,7 @@ const Todo = React.memo(
                       padding: 2,
                     }}
                   >
-                    <FontAwesomeIcon
-                      icon={faArrowDown}
-                      color={
-                        mode === "dark"
-                          ? theme.palette.dark.main
-                          : theme.palette.light.main
-                      }
-                    />
+                    <FontAwesomeIcon icon={faArrowDown} />
                   </Button>
                 </Tooltip>
                 <Button

@@ -1,22 +1,16 @@
 /** @format */
 
 import "../App.css";
-import { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { Alert, Card } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import { ThemeContext } from "../context/context";
 
 const CompletedTaskContainer = ({ tasks }) => {
   const completedTasks = tasks.filter((task) => task.completed);
-  const { mode } = useContext(ThemeContext);
 
   return (
-    <Card
-      sx={{ pt: 5, pb: 5, pr: 3, pl: 3 }}
-      style={{ background: mode === "dark" ? "#5c8bc2" : "white" }}
-    >
+    <Card sx={{ pt: 5, pb: 5, pr: 3, pl: 3 }}>
       <Grid>
         <div className="completedTasks__inner">
           {completedTasks.length !== 0 ? (

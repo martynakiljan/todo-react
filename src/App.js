@@ -5,8 +5,7 @@ import TodoContainer from "./components/TodoContainer";
 import Container from "@mui/material/Container";
 import CompletedTaskContainer from "./components/CompletedTasksContainer";
 import Tooltip from "@mui/material/Tooltip";
-import { ThemeContext } from "./context/context.js";
-import { createTheme } from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import { Typography } from "@mui/material";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
@@ -14,56 +13,70 @@ import { DarkMode } from "@mui/icons-material";
 
 function App() {
   const [tasks, setTasks] = useState([]);
-  const [mode, setMode] = useState("light");
+  const [darkMode, setDarkMode] = useState(false);
 
-  const theme = createTheme({
+  const changeTheme = () => {
+    setDarkMode(!darkMode);
+  };
+
+  const lightTheme = createTheme({
     palette: {
-      light: {
+      mode: "light",
+      primary: {
         main: "#1976d2",
-      },
-      dark: {
-        main: "#020028",
       },
     },
   });
 
-  const changeMode = () => {
-    setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
-  };
+  const darkTheme = createTheme({
+    palette: {
+      mode: "dark",
+      primary: {
+        main: "#c5dbf1",
+      },
+      secondary: {
+        main: "#f50057",
+      },
+    },
+  });
 
   useEffect(() => {
-    if (mode === "light") {
+    if (!darkMode) {
       document.body.classList.add("theme-light");
       document.body.classList.remove("theme-dark");
     } else {
       document.body.classList.add("theme-dark");
       document.body.classList.remove("theme-light");
     }
-  }, [mode]);
+  }, [darkMode]);
 
   return (
-    <ThemeContext.Provider value={{ theme, mode }}>
-      <div className="App">
+    <div className="App">
+      <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
         <Container maxWidth="md">
           <h1 className="todo-title">TODO LIST</h1>
           <Tooltip title="you can change theme!">
-            <IconButton onClick={changeMode} color="inherit">
+            <IconButton onClick={changeTheme} color="inherit">
               {
                 <Typography
-                  color={mode === "light" ? "black" : "rgb(92, 139, 194)"}
                   sx={{ pr: 1 }}
+                  color={darkMode ? "#c5dbf1" : "#000000"}
                 >
-                  {mode === "light" ? "dark" : "light"} mode
+                  {darkMode ? "light" : "dark"} mode
                 </Typography>
               }
-              {mode === "dark" ? (
-                <Brightness7Icon style={{ color: "rgb(92, 139, 194)" }} />
+              {darkMode ? (
+                <Brightness7Icon style={{ color: "#c5dbf1" }} />
               ) : (
                 <DarkMode />
               )}
             </IconButton>
           </Tooltip>
-          <TodoContainer tasks={tasks} setTasks={setTasks} />
+          <TodoContainer
+            tasks={tasks}
+            setTasks={setTasks}
+            darkMode={darkMode}
+          />
         </Container>
         <Container maxWidth="sm">
           <h2 className="todo-title todo-title__completed">
@@ -71,8 +84,8 @@ function App() {
           </h2>
           <CompletedTaskContainer tasks={tasks} />
         </Container>
-      </div>
-    </ThemeContext.Provider>
+      </ThemeProvider>
+    </div>
   );
 }
 

@@ -8,16 +8,12 @@ body {
   background: radial-gradient(592px at 48.2% 50%, rgba(255, 255, 249, 0.6) 0%, rgb(160, 199, 254) 74.6%);
 }
 
-body.theme-dark{ background: rgb(2,0,36);
-background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(21,55,94,1) 100%, rgba(0,212,255,1) 100%);
+body.theme-dark{
+ background: #3f3f3f;
 
-.todo-title,
-.fa-brush {
-  color: white;
-}
-
-.list-title:not(.list-title__completed) {
-    color: #020028;
+  .todo-title,
+  .fa-brush {
+    color: #c5dbf1;
   }
 }
 
@@ -72,6 +68,10 @@ background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(21,55,94,1) 100%, rgb
   font-family: "Architects Daughter", cursive;
   list-style: none;
   color: #1976d2;
+
+  .theme-dark & {
+    color: #c5dbf1;
+  }
 }
 
 .list-button {
@@ -88,12 +88,14 @@ background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(21,55,94,1) 100%, rgb
 
 .confirmation-modal__bg {
   background-color: black;
-  opacity: 0.6;
+  opacity: 0.8;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   position: fixed;
+  cursor: none;
+  z-index: 11;
 }
 
 .completedTasks__container {
@@ -119,8 +121,11 @@ background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(21,55,94,1) 100%, rgb
 .list-title__completed {
   padding: 0 10px;
   color: green;
-}
 
+  .theme-dark & {
+    color: #c5fdc5;
+  }
+}
 
 .fa-brush {
   padding: 10px 4px;

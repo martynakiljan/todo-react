@@ -1,25 +1,16 @@
 /** @format */
-import React, {
-  useEffect,
-  useState,
-  useRef,
-  useContext,
-  useCallback,
-} from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { FormControl } from "@mui/base/FormControl";
 import TodoList from "./TodoList";
-import FormLabel from "@mui/joy/FormLabel";
 import Button from "@mui/material/Button";
 import { OutlinedInput, Alert, Typography, Card } from "@mui/material";
 import Box from "@mui/material/Box";
 import Info from "./Info";
-import { ThemeContext } from "../context/context";
 
-const TodoContainer = React.memo(({ tasks, setTasks }) => {
+const TodoContainer = React.memo(({ tasks, setTasks, darkMode }) => {
   const [text, setText] = useState("");
   const [disable, setDisable] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
-  const { mode, theme } = useContext(ThemeContext);
 
   const editTask = React.useCallback(
     (completed, text, id) => {
@@ -155,32 +146,25 @@ const TodoContainer = React.memo(({ tasks, setTasks }) => {
   };
 
   return (
-    <Card
-      sx={{ p: "20px 20px" }}
-      style={{ background: mode === "dark" ? "#5c8bc2" : "white" }}
-    >
-      {/* <pre>{JSON.stringify(tasks, null, 2)}</pre> */}
+    <Card sx={{ p: "20px 20px" }}>
       <Box
         flexDirection="row"
         justifyContent="center"
         alignItems="center"
         sx={{ width: "100%" }}
+        background="primary"
       >
         <FormControl>
-          <FormLabel className="label" color="primar" variant="h3">
+          <label className="label" variant="h3">
             <Typography
               variant="h6"
               sx={{ paddingBottom: 1 }}
-              color={
-                mode === "dark"
-                  ? theme.palette.dark.main
-                  : theme.palette.light.main
-              }
+              color={darkMode ? "#c5dbf1" : "#000000"}
             >
               {" "}
               Your task:
             </Typography>
-          </FormLabel>
+          </label>
           <OutlinedInput
             placeholder="what should you do?"
             value={text}
