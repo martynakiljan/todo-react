@@ -25,6 +25,12 @@ function App() {
       primary: {
         main: "#1976d2",
       },
+      text: {
+        primary: "#1976d2",
+      },
+      secondary: {
+        main: "#005b7c",
+      },
     },
   });
 
@@ -34,9 +40,13 @@ function App() {
       primary: {
         main: "#c5dbf1",
       },
-      secondary: {
-        main: "#f50057",
+      text: {
+        primary: "#c5dbf1",
       },
+      secondary: {
+        main: "#add6ff",
+      },
+      background: "#6b6b6b",
     },
   });
 
@@ -58,17 +68,14 @@ function App() {
           <Tooltip title="you can change theme!">
             <IconButton onClick={changeTheme} color="inherit">
               {
-                <Typography
-                  sx={{ pr: 1 }}
-                  color={darkMode ? "#c5dbf1" : "#000000"}
-                >
+                <Typography sx={{ pr: 1 }} color="secondary">
                   {darkMode ? "light" : "dark"} mode
                 </Typography>
               }
               {darkMode ? (
-                <Brightness7Icon style={{ color: "#c5dbf1" }} />
+                <Brightness7Icon color="primary" />
               ) : (
-                <DarkMode />
+                <DarkMode color="primary" />
               )}
             </IconButton>
           </Tooltip>

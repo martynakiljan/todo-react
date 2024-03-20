@@ -7,7 +7,7 @@ import { OutlinedInput, Alert, Typography, Card } from "@mui/material";
 import Box from "@mui/material/Box";
 import Info from "./Info";
 
-const TodoContainer = React.memo(({ tasks, setTasks, darkMode }) => {
+const TodoContainer = React.memo(({ tasks, setTasks }) => {
   const [text, setText] = useState("");
   const [disable, setDisable] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
@@ -156,11 +156,7 @@ const TodoContainer = React.memo(({ tasks, setTasks, darkMode }) => {
       >
         <FormControl>
           <label className="label" variant="h3">
-            <Typography
-              variant="h6"
-              sx={{ paddingBottom: 1 }}
-              color={darkMode ? "#c5dbf1" : "#000000"}
-            >
+            <Typography variant="h6" sx={{ paddingBottom: 1 }}>
               {" "}
               Your task:
             </Typography>
