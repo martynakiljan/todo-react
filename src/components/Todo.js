@@ -35,12 +35,11 @@ const Todo = React.memo(
       display: "block",
       margin: "20px auto",
     };
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [taskIdToDelete, setTaskIdToDelete] = useState(null);
     const [confirmation, setConfirmation] = useState(false);
 
     useEffect(() => {
-      setLoading(true);
       const timer = setTimeout(() => {
         setLoading(false);
       }, 300);

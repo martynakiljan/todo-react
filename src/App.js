@@ -6,7 +6,7 @@ import Container from "@mui/material/Container";
 import CompletedTaskContainer from "./components/CompletedTasksContainer";
 import Tooltip from "@mui/material/Tooltip";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
 import { Typography } from "@mui/material";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { DarkMode } from "@mui/icons-material";
@@ -66,18 +66,22 @@ function App() {
         <Container maxWidth="md">
           <h1 className="todo-title">TODO LIST</h1>
           <Tooltip title="you can change theme!">
-            <IconButton onClick={changeTheme} color="inherit">
-              {
-                <Typography sx={{ pr: 1 }} color="secondary">
-                  {darkMode ? "light" : "dark"} mode
-                </Typography>
+            <Button
+              onClick={changeTheme}
+              color="inherit"
+              style={{ textTransform: "none" }}
+              endIcon={
+                darkMode ? (
+                  <Brightness7Icon color="primary" />
+                ) : (
+                  <DarkMode color="primary" />
+                )
               }
-              {darkMode ? (
-                <Brightness7Icon color="primary" />
-              ) : (
-                <DarkMode color="primary" />
-              )}
-            </IconButton>
+            >
+              <Typography color="secondary">
+                {darkMode ? "light" : "dark"} mode
+              </Typography>
+            </Button>
           </Tooltip>
           <TodoContainer
             tasks={tasks}

@@ -15,12 +15,13 @@ const TodoList = React.memo(
     drop,
     moveUp,
     moveDown,
+    index,
     isEdited,
   }) => {
     return (
       <>
         <ul className="list-container">
-          {tasks.map((task, index) => (
+          {tasks.map((task, itemIndex) => (
             <Todo
               task={task}
               completeTask={completeTask}
@@ -35,6 +36,7 @@ const TodoList = React.memo(
               moveUp={moveUp}
               moveDown={moveDown}
               isEdited={isEdited}
+              index={itemIndex}
             />
           ))}
         </ul>
