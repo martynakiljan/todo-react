@@ -29,7 +29,7 @@ function App() {
         primary: "#1976d2",
       },
       secondary: {
-        main: "#005b7c",
+        main: "#1976d2",
       },
     },
   });
@@ -44,7 +44,7 @@ function App() {
         primary: "#c5dbf1",
       },
       secondary: {
-        main: "#add6ff",
+        main: "#c5dbf1",
       },
       background: "#6b6b6b",
     },
