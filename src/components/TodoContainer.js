@@ -156,7 +156,7 @@ const TodoContainer = React.memo(({ tasks, setTasks }) => {
       >
         <FormControl>
           <label className="label" variant="h3">
-            <Typography variant="h6" sx={{ paddingBottom: 1 }}>
+            <Typography variant="h7" sx={{ paddingBottom: 1 }}>
               {" "}
               Your task:
             </Typography>
