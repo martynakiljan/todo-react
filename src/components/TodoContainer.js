@@ -75,7 +75,7 @@ const TodoContainer = React.memo(({ tasks, setTasks }) => {
   const dragstart = useCallback(
     (id) => {
       dragItem.current = id;
-      console.log(dragItem);
+  
     },
     [dragItem]
   );
@@ -99,7 +99,6 @@ const TodoContainer = React.memo(({ tasks, setTasks }) => {
       setTasks((tasks) => {
         const newTasks = [...tasks];
         const temp = newTasks[dragItemIndex];
-        console.log(temp);
         newTasks[dragItemIndex] = newTasks[dragOverItemIndex];
         newTasks[dragOverItemIndex] = temp;
         return newTasks;
@@ -111,7 +110,6 @@ const TodoContainer = React.memo(({ tasks, setTasks }) => {
   }, [dragItem, setTasks, tasks]);
 
   const moveUp = (index) => {
-    console.log(index);
     setTasks((prevTasks) => {
       if (index > 0) {
         const newTasks = [...prevTasks];
@@ -130,7 +128,6 @@ const TodoContainer = React.memo(({ tasks, setTasks }) => {
   };
 
   const moveDown = (index) => {
-    console.log(index);
     setTasks((prevTasks) => {
       const newTasks = [...prevTasks];
       if (index < tasks.length - 1) {
