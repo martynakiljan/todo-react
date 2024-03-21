@@ -6,14 +6,14 @@
 
 Small "todo list" application
 
-- adding a new task
-- editing a task
-- marking it as important
+- add a new task
+- edit a task
+- mark as important
 - mark as completed
-- moving up to top
+- move up to top
 - drag and drop
-- deletion
-- changing the theme to dark/light
+- delet
+- change the theme to dark/light
 
 
 <h3>How to open a file? :eyes: </h3>
