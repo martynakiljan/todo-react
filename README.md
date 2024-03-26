@@ -1,8 +1,13 @@
 <h1> TODO LIST </h1>
 
 -------
-- Technologies: REACT, NPM and MUI
-- I use MUI https://mui.com/ -  The React component library
+
+🔶 Technologies: REACT, NPM and MUI (https://mui.com/ -  The React component library)
+<br>
+🔶 [Live click]([https://martynakiljan.github.io/new-portfolio-2024/](https://todo-react2-wheat.vercel.app/)
+ 
+
+
 
 Small "todo list" application
 
