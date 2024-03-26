@@ -15,7 +15,7 @@ const ConfirmationModal = ({ closeModalandDelete, closeModalandDoNothing }) => {
             bgcolor: "background.paper",
             padding: "20px",
             "@media (min-width:600px)": {
-              padding: "20px 60px",
+              padding: "20px 50px",
             },
           }}
         >
