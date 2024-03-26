@@ -4,9 +4,7 @@
 
 🔶 Technologies: REACT, NPM and MUI (https://mui.com/ -  The React component library)
 <br>
-🔶 [Live click]([(https://todo-react2-wheat.vercel.app/)])
- 
-
+🔶 [Live ](https://todo-react2-wheat.vercel.app/)
 
 
 Small "todo list" application
