@@ -26,5 +26,6 @@ Small "todo list" application
 * then you can start *npm start*
 
 
-<img width="834" alt="Zrzut ekranu 2024-03-18 o 21 02 49" src="https://github.com/martynakiljan/todo-react/assets/59742201/258451df-779e-468a-ab45-55af91bd8103">
-<img width="597" alt="Zrzut ekranu 2024-03-18 o 21 01 21" src="https://github.com/martynakiljan/todo-react/assets/59742201/25719ef2-f3a1-4a2f-be5d-cb9c42205567">
+![Bildschirmfoto 2024-03-26 um 14 41 35](https://github.com/martynakiljan/todo-react/assets/59742201/0f89a04e-a696-40a9-9420-fa07e99f6436)
+
+![Bildschirmfoto 2024-03-26 um 14 41 53](https://github.com/martynakiljan/todo-react/assets/59742201/fdffe9b4-8003-4092-aaca-e8fc369aaf4f)
