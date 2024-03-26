@@ -5,11 +5,15 @@
 
 body {
   font-size: 14px;
-  background: radial-gradient(592px at 48.2% 50%, rgba(255, 255, 249, 0.6) 0%, rgb(160, 199, 254) 74.6%);
+  background: radial-gradient(
+    592px at 48.2% 50%,
+    rgba(255, 255, 249, 0.6) 0%,
+    rgb(160, 199, 254) 74.6%
+  );
 }
 
-body.theme-dark{
- background: #151921;
+body.theme-dark {
+  background: #151921;
 
   .todo-title,
   .fa-brush {
@@ -36,14 +40,13 @@ body.theme-dark{
 }
 
 .todo-title {
-  font-family: "Architects Daughter", cursive;
+  font-family: 'Architects Daughter', cursive;
   font-weight: 400;
   text-align: center;
   margin: 50px 0;
   color: black;
   font-size: 40px;
 }
-
 
 .todo-title__completed {
   font-size: 25px;
@@ -69,7 +72,7 @@ body.theme-dark{
 
 .list-title {
   min-width: 150px;
-  font-family: "Architects Daughter", cursive;
+  font-family: 'Architects Daughter', cursive;
   list-style: none;
   color: #1976d2;
 
@@ -79,15 +82,19 @@ body.theme-dark{
 }
 
 .list-button {
-   margin: 0 5px;
+  margin: 0 5px;
 }
 
 .confirmation-modal {
-    position: absolute;
-    top: 50%;  /* position the top  edge of the element at the middle of the parent */
-    left: 50%; /* position the left edge of the element at the middle of the parent */
-    transform: translate(-50%, -50%);
-    z-index: 11;
+  position: absolute;
+  top: 50%; /* position the top  edge of the element at the middle of the parent */
+  left: 50%; /* position the left edge of the element at the middle of the parent */
+  transform: translate(-50%, -50%);
+  z-index: 11;
+
+  @media (max-width: 600px) {
+    width: 80%;
+  }
 }
 
 .confirmation-modal__bg {
@@ -114,7 +121,7 @@ body.theme-dark{
   font-size: 20px;
 }
 
-.completeTask__btn{
+.completeTask__btn {
   background-color: transparent;
   border: none;
   font-size: 20px;
@@ -136,6 +143,3 @@ body.theme-dark{
   font-size: 20px;
   cursor: pointer;
 }
-
-
-
